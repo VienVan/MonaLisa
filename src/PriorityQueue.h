@@ -22,7 +22,7 @@ private:
 public:
 	PriorityQueue();
 	void addToList(Order& o);
-	void shipOrder();
+	Order shipOrder();
 	void buildMaxHeap();
 	void maxHeapify(int index);
 	void printShippingList(ostream& os);

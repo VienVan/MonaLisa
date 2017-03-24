@@ -14,6 +14,7 @@
 #include "List.h"
 using namespace std;
 
+template <class hashdata>
 class HashTable {
 public:
     /**Constructors*/
@@ -42,9 +43,9 @@ public:
 
     /**Manipulation Procedures*/
 
-    void insert(Art a);
+    void insert(hashdata a);
 
-    void remove(Art ab);
+    void remove(hashdata ab);
 
 
     /**Additional Functions*/
@@ -57,8 +58,9 @@ public:
 
 
 private:
-    static const int SIZE = 10;
-    List<Art> Table[SIZE];
+    static const int SIZE = 25;
+    List<Art> Art[SIZE];
+    List<Customer> Customer[SIZE];
 };
 
 #endif /* HASHTABLE_H_ */

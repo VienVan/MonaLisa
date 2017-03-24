@@ -34,20 +34,22 @@ void PriorityQueue::addToList(Order& o){
 	insertHelper(size);
 }
 
-void PriorityQueue::shipOrder(){
+Order PriorityQueue::shipOrder(){
 	if(size == 0){
 		cout << "There is nothing to remove" << endl;
-		return;
+		return Order();
 	}
+	Order copy(shippingList[1]);
+	shippingList[1].setHasShipped();
 	shippingList[1] = shippingList[size];
 	shippingList.erase(shippingList.begin() + size);
 	size--;
 	buildMaxHeap();
+	return copy;
 }
 
 void PriorityQueue::buildMaxHeap(){
 	for(int b = size/2; b >= 1; b--){
-		cout << "yo" << endl;
 		maxHeapify(b);
 	}
 }
@@ -73,6 +75,7 @@ void PriorityQueue::printShippingList(ostream& os){
 	os << "---------------------" << endl;
 	os << endl;
 	for(int a = 1; a <= size; a++){
-		os << shippingList[a] << endl;
+		os << shippingList[a];
 	}
+	os << endl;
 }

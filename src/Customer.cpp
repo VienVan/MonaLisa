@@ -8,6 +8,8 @@
 
 #include "Customer.h"
 
+Customer::Customer() : first_name(""), last_name(""), address(""), city(""), zip() {}
+
 Customer::Customer(string fn, string ln, string a, string c, string s, int z) {
 	first_name = fn;
 	last_name = ln;
@@ -43,6 +45,33 @@ void Customer::setZip(int z) {
 
 void Customer::addOrder(Order& o) {
 	orderHistory.insertLast(o);
+}
+
+void Customer::shippedOrder(Order o){
+	if(!orderHistory.isEmpty()){
+		Order temp2;
+		orderHistory.startIterator();
+		while(!orderHistory.offEnd()){
+			if(orderHistory.getIterator() == o){
+				Order temp (orderHistory.getIterator());
+				temp.setHasShipped();
+				orderHistory.removeIterator();
+				if(orderHistory.isEmpty()){
+					orderHistory.insertFirst(temp);
+					break;
+				}
+				orderHistory.startIterator();
+				while(!orderHistory.offEnd()){
+					if(orderHistory.getIterator() == temp2){
+						orderHistory.insertIterator(temp);
+					}
+				}
+				break;
+			}
+			temp2 = orderHistory.getIterator();
+			orderHistory.advanceIterator();
+		}
+	}
 }
 
 void Customer::printOrderHistory(ostream& os) {
@@ -100,5 +129,12 @@ string Customer::getState() {
 
 int Customer::getZip() {
 	return zip;
+}
+
+
+
+void Customer::userInteraction()
+{
+	cout << "Customers suck\n";
 }
 

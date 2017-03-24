@@ -10,17 +10,17 @@
 #include "Order.h"
 
 Order::Order() :
-		customerFirst_Name("N/A"), priority(standard), date("N/A") {
+		customerFirst_Name("N/A"), priority(standard), date("N/A"), totalPrice(0), hasShipped(false) {
 }
 
 Order::Order(string cfn, string cln, string d) :
 		customerFirst_Name(cfn), customerLast_Name(cln), priority(standard), date(
-				d) {
+				d), totalPrice(0), hasShipped(false) {
 }
 
 Order::Order(const Order& o) :
 		customerFirst_Name(o.customerFirst_Name), customerLast_Name(
-				o.customerLast_Name), priority(o.priority), date(o.date) {
+				o.customerLast_Name), priority(o.priority), date(o.date), totalPrice(o.totalPrice), hasShipped(o.hasShipped) {
 	List<Art> copy(o.cart);
 	if (!copy.isEmpty()) {
 		copy.startIterator();
@@ -39,6 +39,17 @@ string Order::getcustomerLast_Name() {
 	return customerLast_Name;
 }
 
+double Order::getTotalPrice(){
+	if(!cart.isEmpty()){
+		cart.startIterator();
+		while(!cart.offEnd()){
+			totalPrice += cart.getIterator().getPrice();
+			cart.advanceIterator();
+		}
+	}
+	return totalPrice;
+}
+
 void Order::setcustomerFirst_Name(string cfn) {
 	customerFirst_Name = cfn;
 }
@@ -54,6 +65,10 @@ void Order::setPriority(char p) {
 		priority = rush;
 	if (toupper(p) == 'S')
 		priority = standard;
+}
+
+void Order::setHasShipped(){
+	hasShipped = true;
 }
 
 void Order::addToCart(Art a) {
@@ -104,6 +119,11 @@ ostream& operator<<(ostream& os, const Order& o) {
 		os << "Overnight" << endl;
 	}
 
+	os << "Shipping Status: ";
+	if(o.hasShipped == true)
+		os << "Shipped" << endl;
+	else
+		os << "Has Not Shipped" << endl;
 	os << "Items Ordered:" << endl;
 	os << "--------------" << endl;
 
@@ -177,4 +197,9 @@ Order& Order::operator=(const Order& o){
 		}
 		return *this;
 	}
+}
+
+void Order::userInteraction()
+{
+	cout << "vien is awesome \n";
 }

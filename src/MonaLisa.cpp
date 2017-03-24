@@ -1,15 +1,17 @@
-//============================================================================
-// Name        : MonaLisa.cpp
-// Author      : 
-// Version     :
-// Copyright   : Your copyright notice
-// Description : Hello World in C++, Ansi-style
-//============================================================================
+#define _CRT_SECURE_NO_WARNINGS
 
 #include <iostream>
+#include "ControlModule.h"
 using namespace std;
 
+
 int main() {
-	cout << "!!!Hello World!!!" << endl; // prints !!!Hello World!!!
+	cout << "CIS 22C\nFinal Project\nTeam #6\nMembers:" << endl;
+	cout << "\tYun Cao, Vincent Ha, Jimmy Nguyen, Kota Iwamoto, Vien Van\n";
+
+
+	ControlModule runner;
+	runner.userInteraction();
+
 	return 0;
 }
