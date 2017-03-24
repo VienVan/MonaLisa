@@ -8,19 +8,21 @@
 
 #include <locale>
 #include "Order.h"
+#include <ctime>
+
 
 Order::Order() :
-		customerFirst_Name("N/A"), priority(standard), date("N/A"), totalPrice(0), hasShipped(false) {
+		customerFirstName("N/A"), priority(standard), date("N/A"), totalPrice(0), hasShipped(false) {
 }
 
 Order::Order(string cfn, string cln, string d) :
-		customerFirst_Name(cfn), customerLast_Name(cln), priority(standard), date(
+		customerFirstName(cfn), customerLastName(cln), priority(standard), date(
 				d), totalPrice(0), hasShipped(false) {
 }
 
 Order::Order(const Order& o) :
-		customerFirst_Name(o.customerFirst_Name), customerLast_Name(
-				o.customerLast_Name), priority(o.priority), date(o.date), totalPrice(o.totalPrice), hasShipped(o.hasShipped) {
+		customerFirstName(o.customerFirstName), customerLastName(
+				o.customerLastName), priority(o.priority), date(o.date), totalPrice(o.totalPrice), hasShipped(o.hasShipped) {
 	List<Art> copy(o.cart);
 	if (!copy.isEmpty()) {
 		copy.startIterator();
@@ -32,11 +34,11 @@ Order::Order(const Order& o) :
 }
 
 string Order::getcustomerFirst_Name() {
-	return customerFirst_Name;
+	return customerFirstName;
 }
 
 string Order::getcustomerLast_Name() {
-	return customerLast_Name;
+	return customerLastName;
 }
 
 double Order::getTotalPrice(){
@@ -51,11 +53,11 @@ double Order::getTotalPrice(){
 }
 
 void Order::setcustomerFirst_Name(string cfn) {
-	customerFirst_Name = cfn;
+	customerFirstName = cfn;
 }
 
 void Order::setcustomerLast_Name(string cln) {
-	customerLast_Name = cln;
+	customerLastName = cln;
 }
 
 void Order::setPriority(char p) {
@@ -103,9 +105,15 @@ void Order::printCart(ostream& os) {
 		os << "The cart is currently empty." << endl;
 }
 
+void Order::setDate()
+{
+	time_t now = time(0);
+	char* dt = ctime(&now);
+	date = dt;
+}
 ostream& operator<<(ostream& os, const Order& o) {
-	os << "Customer: " << o.customerFirst_Name << " "
-			<< o.customerLast_Name << endl;
+	os << "Customer: " << o.customerFirstName << " "
+			<< o.customerLastName << endl;
 	os << "Date of Order: " << o.date << endl;
 	os << "Shipping Priority: ";
 	switch (o.priority) {
@@ -179,8 +187,8 @@ Order& Order::operator=(const Order& o){
 	if(this == &o){
 		return *this;
 	} else{
-		customerFirst_Name = o.customerFirst_Name;
-		customerLast_Name = o.customerLast_Name;
+		customerFirstName = o.customerFirstName;
+		customerLastName = o.customerLastName;
 		priority = o.priority;
 		date = o.date;
 		while(!cart.isEmpty()){
@@ -199,7 +207,45 @@ Order& Order::operator=(const Order& o){
 	}
 }
 
-void Order::userInteraction()
+void Order::userInteraction(string type)
 {
-	cout << "vien is awesome \n";
+	string choice;
+	if(type == "employee")
+	{
+		cout << "\tMona Lisa Art Dealer" << endl
+			 << "\t Orders " << endl
+			 << "1. View Orders by Priority" << endl
+			 << "2. Ship an Order" << endl
+			 << "3. Exit " << endl;
+	}
+	else
+	{
+		string choice;
+		cout <<"\tMona Lisa Art Dealer" << endl
+			 <<"\tPlace an order" << endl << endl
+			 << "First Name: ";
+		// get customer info
+		getline(cin, customerFirstName);
+		this->setcustomerFirst_Name(customerFirstName);
+		cout << "\nLast Name: ";
+		getline(cin, customerLastName);
+		this->setcustomerLast_Name(customerLastName);
+		setDate();
+		// get total price of cart
+		while(cart.getSize() != 0)
+		{
+			cart.startIterator();
+			Art art = cart.getIterator();
+			totalPrice += art.getPrice();
+			cart.advanceIterator();
+		}
+		cout << "Would you like to purchase this item? (y or n)" << endl;
+		getline(cin, choice);
+		if(choice == "y" || choice == "Y")
+		{
+			cout << "Your order has been placed. Thank you for shopping with us." << endl;
+		}
+	}
+
+
 }

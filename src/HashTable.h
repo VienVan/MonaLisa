@@ -1,20 +1,11 @@
-/*
- * Hash.h
- *
- *  Created on: Mar 6, 2017
- *      Author: KOTA IWAMOTO
- */
-
 #ifndef HASHTABLE_H_
 #define HASHTABLE_H_
 
 #include <string>
-#include <assert.h>
-#include "Art.h"
 #include "List.h"
+#include "Customer.h"
 using namespace std;
 
-template <class hashdata>
 class HashTable {
 public:
     /**Constructors*/
@@ -32,36 +23,60 @@ public:
     /**Access Functions*/
 
     int hash(string key);
-
+    //returns the hash value for the given key
+    //the hash value is the sum of
+    //of the ASCII values of each char in the key
+    //% the size the of the table
+    //Key for this table: title + author
 
     int countBucket(int index);
-
+    //counts the number of Books at this index
+    //returns the count
     //pre: 0<= index < SIZE
 
-    int search(Art a);
-
+    int search(Customer b);
+    //Searches for b in the table
+    //returns the index at which b is located
+    //returns -1 if b is not in the table
 
     /**Manipulation Procedures*/
 
-    void insert(hashdata a);
+    void insert(Customer b);
+    //inserts a new book into the table
+    //calls the hash function on the key to determine
+    //the correct bucket
 
-    void remove(hashdata ab);
-
+    void remove(Customer b);
+    //removes b from the table
+    //calls the hash function on the key to determine
+    //the correct bucket
 
     /**Additional Functions*/
 
     void printBucket(int index);
+    //Prints all the books at index
     //pre: 0<= index < SIZE
-
+    //Should print according to the following formula:
+    //"Printing index <index#>
+    //skips two lines
+    //Next, prints each book at that index in the format:
+    //<title> by <author>
+    //$<X.XX>
+    //ISBN: <isbn>
+    //followed by a blank line
 
     void printTable();
+    //Prints the first book at each index
+    //along with a count of the total books
+    //at each index by calling count_bucket
+    //as a helper function
+    //Prints in the format:
 
+    void userInteraction();
 
 private:
-    static const int SIZE = 25;
-    List<Art> Art[SIZE];
-    List<Customer> Customer[SIZE];
+    static const int SIZE = 10;
+    List<Customer> Table[SIZE];
 };
 
 #endif /* HASHTABLE_H_ */
-

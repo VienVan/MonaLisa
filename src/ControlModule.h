@@ -4,6 +4,9 @@
 #include "Art.h"
 #include "Customer.h"
 #include "Order.h"
+#include "BST.h"
+#include "HashTable.h"
+
 //#include "HashTable.h"
 
 
@@ -12,11 +15,12 @@ class ControlModule
 private:
 //    Inventory *I;
     Order *order;
-    Customer *customer;
-//    HashTable *inventory;
+    HashTable *customer;
+    BST<Art> *inventoryTitle;
+    BST<Art> *inventoryArtist;
 
 public:
-    ControlModule();
+    ControlModule(BST<Art> *invTitle, BST<Art> *invArtist);
     ~ControlModule();
 	void userInteraction();
 	void employeeInteraction();

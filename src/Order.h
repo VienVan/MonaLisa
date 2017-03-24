@@ -20,8 +20,8 @@ enum Shipping {
 
 class Order {
 private:
-	string customerFirst_Name;
-	string customerLast_Name;
+	string customerFirstName;
+	string customerLastName;
 	Shipping priority; // Choices for priority are: O for Overnight Shipping, R for Rush Shipping and S for Standard Shipping.
 	string date;			//	Should be written as month/day/year
 	List<Art> cart;
@@ -39,10 +39,11 @@ public:
 	void setcustomerLast_Name(string cln);
 	void setPriority(char p);	// Input should be: o, O, r, R, s, S
 	void setHasShipped();
+	void setDate();
 	void addToCart(Art a);
 	void removeFromCart(Art a);
 	void printCart(ostream& os);
-	void userInteraction();
+	void userInteraction(string type);
 
 	friend ostream& operator<<(ostream& os, const Order& o);
 	bool operator>(const Order& o);
