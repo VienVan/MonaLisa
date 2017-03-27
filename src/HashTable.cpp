@@ -1,8 +1,8 @@
 /*
  * HashTable.cpp
  *
- *  Created on: Mar 5, 2017
- *      Author: VienVonVan
+ *  Created on: Mar 25, 2017
+ *      Author: Vincent_Ha
  */
 
 #include "HashTable.h"
@@ -75,7 +75,7 @@ int HashTable::search(Customer c)
 void HashTable::insert(Customer c)
 {
 	// concatenate title and author for key
-	string key = c.getFirst_Name() + c.getLast_Name();
+	string key = c.getFirst_Name() + c.getLast_Name() + c.getAddress();
 
 	// get index to insert to
 	int index = hash(key);
@@ -130,4 +130,21 @@ void HashTable::printTable()
 void HashTable::userInteraction()
 {
 	cout << "HashTable interaction" << endl;
+}
+
+
+Customer HashTable::getItem(Customer& c){
+	if(search(c) != -1){
+		int index = search(c);
+		Table[index].startIterator();
+		while(!Table[index].offEnd()){
+			if(Table[index].getIterator() == c){
+				return Table[index].getIterator();
+			}
+			Table[index].advanceIterator();
+		}
+	} else{
+		cout << "It is not in the list" << endl;
+		return Customer();
+	}
 }

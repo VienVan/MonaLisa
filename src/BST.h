@@ -1,9 +1,12 @@
 /*
- * BinarySearchTree.h
+ * BST.h
  *
- *  Created on: Feb 14, 2017
- *      Author: VienVonVan
+ *  Created on: Mar 25, 2017
+ *      Author: Vincent_Ha
  */
+
+#ifndef BST_H_
+#define BST_H_
 
 #ifndef BINARYSEARCHTREE_H_
 #define BINARYSEARCHTREE_H_
@@ -74,11 +77,11 @@ class BST
         NodePtr removeHelper(NodePtr root, bstdata value);
         //recursively removes the specified value from the tree
 
-
         void insertHelper(NodePtr root, bstdata value);
         //private helper function for insert
         //recursively inserts a value into the BST
 
+        bstdata findHelper2(NodePtr root, bstdata value);
         /**Public functions*/
 
     public:
@@ -148,6 +151,7 @@ class BST
         //calls the findHelper function to search for the value recursively
         //Pre: !isEmpty()
 
+        bstdata find2(bstdata value);
         /************************************************************
         *                       MANIP. FUNCTIONS                    *
         *************************************************************/
@@ -337,6 +341,26 @@ void BST<bstdata>::copyHelper(NodePtr copy)
 		copyHelper(copy->right);
 	}
 }
+
+template <class bstdata>
+bstdata BST<bstdata>::findHelper2(NodePtr root, bstdata value){
+	if(value == root->data)
+		return root->data;
+	else if(value < root->data){
+		if(root->left == NULL){
+			cout << "Cannot find the value in the tree" << endl;
+			return value;
+		} else
+			return findHelper2(root->left, value);
+	} else{
+		if(root->right == NULL){
+			cout << "Cannot find the value in the tree" << endl;
+			return value;
+		} else
+			return findHelper2(root->right, value);
+	}
+}
+
 /********************************************************
  *                   ACCESS FUNCTIONS                   *
  ********************************************************/
@@ -439,6 +463,7 @@ bool BST<bstdata>::find(bstdata value)
 	assert(!isEmpty());
 	return findHelper(root, value);
 }
+
 template <class bstdata>
 typename BST<bstdata>::NodePtr BST<bstdata>::removeHelper(NodePtr root, bstdata value)
 {
@@ -523,7 +548,6 @@ void BST<bstdata>::postOrderPrintHelper(NodePtr root, ostream& os)
 }
 
 template<class bstdata>
-
 void BST<bstdata>::destructorHelper(NodePtr root)
 {
 	if(root!= NULL)
@@ -531,6 +555,16 @@ void BST<bstdata>::destructorHelper(NodePtr root)
 		destructorHelper(root->left);
 		destructorHelper(root->right);
 		delete root;
+	}
+}
+
+template <class bstdata>
+bstdata BST<bstdata>::find2(bstdata value){
+	if(!find(value) || getSize() == 0){
+		cout << "The item could not be found" << endl;
+		return value;
+	} else{
+		findHelper2(root, value);
 	}
 }
 
@@ -586,3 +620,5 @@ void BST<bstdata>::userInteraction()
 }
 
 
+
+#endif /* BST_H_ */

@@ -1,12 +1,17 @@
 /*
+
  * Vincent Ha
+
  * CIS 22C, Winter 2017
+
  */
 
 #include "Customer.h"
-#include "Order.h"
 
-Customer::Customer() : first_name(""), last_name(""), address(""), city(""), zip() {}
+Customer::Customer() :
+		first_name("N/A"), last_name("N/A"), address("N/A"), city("N/A"), state(
+				"N/A"), zip(0) {
+}
 
 Customer::Customer(string fn, string ln, string a, string c, string s, int z) {
 	first_name = fn;
@@ -15,6 +20,18 @@ Customer::Customer(string fn, string ln, string a, string c, string s, int z) {
 	city = c;
 	state = s;
 	zip = z;
+}
+
+Customer::Customer(const Customer& c): first_name(c.first_name), last_name(c.last_name), address(c.address), city(c.city), state(
+		c.state), zip(c.zip){
+	List<Order> copy(c.orderHistory);
+	if(!copy.isEmpty()){
+		copy.startIterator();
+		while(!copy.offEnd()){
+			orderHistory.insertLast(copy.getIterator());
+			copy.advanceIterator();
+		}
+	}
 }
 
 void Customer::setFirst_Name(string fn) {
@@ -45,22 +62,22 @@ void Customer::addOrder(Order& o) {
 	orderHistory.insertLast(o);
 }
 
-void Customer::shippedOrder(Order o){
-	if(!orderHistory.isEmpty()){
+void Customer::shippedOrder(Order o) {
+	if (!orderHistory.isEmpty()) {
 		Order temp2;
 		orderHistory.startIterator();
-		while(!orderHistory.offEnd()){
-			if(orderHistory.getIterator() == o){
-				Order temp (orderHistory.getIterator());
-//				temp.setHasShipped();
+		while (!orderHistory.offEnd()) {
+			if (orderHistory.getIterator() == o) {
+				Order temp(orderHistory.getIterator());
+				temp.setHasShipped();
 				orderHistory.removeIterator();
-				if(orderHistory.isEmpty()){
+				if (orderHistory.isEmpty()) {
 					orderHistory.insertFirst(temp);
 					break;
 				}
 				orderHistory.startIterator();
-				while(!orderHistory.offEnd()){
-					if(orderHistory.getIterator() == temp2){
+				while (!orderHistory.offEnd()) {
+					if (orderHistory.getIterator() == temp2) {
 						orderHistory.insertIterator(temp);
 					}
 				}
@@ -83,11 +100,6 @@ void Customer::printOrderHistory(ostream& os) {
 		}
 	}
 }
-
-bool Customer::operator==(const Customer& customer) {
-	return first_name == customer.first_name && last_name == customer.last_name;
-}
-
 
 ostream& operator<<(ostream& os, const Customer& c) {
 	os << c.first_name << " " << c.last_name << endl;
@@ -134,7 +146,28 @@ int Customer::getZip() {
 	return zip;
 }
 
-void Customer::userInteraction()
-{
-	cout << "Customers suck\n";
+bool Customer::operator==(const Customer& customer) {
+	return first_name == customer.first_name && last_name == customer.last_name;
+}
+
+Customer& Customer::operator=(const Customer& c){
+	first_name = c.first_name;
+	last_name = c.last_name;
+	address = c.address;
+	city = c.city;
+	state = c.state;
+	zip = c.zip;
+	if(!orderHistory.isEmpty()){
+		orderHistory.removeLast();
+	}
+
+	List<Order> copy(orderHistory);
+	if(!copy.isEmpty()){
+		copy.startIterator();
+		while(!copy.offEnd()){
+			orderHistory.insertLast(copy.getIterator());
+			copy.advanceIterator();
+		}
+	}
+	return *this;
 }

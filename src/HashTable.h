@@ -74,6 +74,8 @@ public:
 
     void userInteraction();
 
+    Customer getItem(Customer& c);
+
 private:
     static const int SIZE = 10;
     List<Customer> Table[SIZE];

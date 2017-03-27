@@ -89,7 +89,7 @@ int main()
 	outfile.open("output.txt");
 
 	ControlModule runner(inventoryTitle, inventoryArtist);
-	runner.userInteraction(outfile);
+	runner.userInteraction();
 
 
 	cout << "Thank you! Goodbye!" << endl;

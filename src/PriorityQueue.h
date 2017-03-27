@@ -26,6 +26,7 @@ public:
 	void buildMaxHeap();
 	void maxHeapify(int index);
 	void printShippingList(ostream& os);
+	int getSize();
 };
 
 

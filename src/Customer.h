@@ -1,6 +1,9 @@
 /*
+
 * Vincent Ha
+
 * CIS 22C, Winter 2017
+
 */
 
 #ifndef CUSTOMER_H_
@@ -24,24 +27,25 @@ private:
 public:
     Customer();
     Customer(string fn, string ln, string a, string c, string s, int z);
+    Customer(const Customer& c);
     void setFirst_Name(string fn);
     void setLast_Name(string ln);
     void setAddress(string a);
-    void setCity(	string c);
+    void setCity(string c);
     void setState(string s);
     void setZip(int z);
     void addOrder(Order& o);
     void shippedOrder(Order o);
     void printOrderHistory(ostream& os);
-    bool operator==(const Customer& customer);
     friend ostream& operator<< (ostream& os, const Customer& c);
-    void userInteraction();
+
     string getFirst_Name();
     string getLast_Name();
     string getAddress();
     string getCity();
     string getState();
     int getZip();
+    bool operator==(const Customer& customer);
+    Customer& operator=(const Customer& c);
 };
-
-#endif
+#endif /* CUSTOMER_H_ */

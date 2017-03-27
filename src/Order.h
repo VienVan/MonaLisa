@@ -1,6 +1,9 @@
 /*
+
  * Vincent Ha
+
  * CIS 22C, Winter 2017
+
  */
 
 #ifndef ORDER_H_
@@ -17,29 +20,34 @@ enum Shipping {
 
 class Order {
 private:
-	string customerFirstName;
-	string customerLastName;
+	string customerFirst_Name;
+	string customerLast_Name;
+	string address;
 	Shipping priority; // Choices for priority are: O for Overnight Shipping, R for Rush Shipping and S for Standard Shipping.
 	string date;			//	Should be written as month/day/year
 	List<Art> cart;
 	double totalPrice;
 	bool hasShipped;
+
 public:
+	void setDate();
 	Order();
-	Order(string cfn, string cln, string d);
+	Order(string cfn, string cln, string a);
 	Order(const Order& o);
 	string getcustomerFirst_Name();
 	string getcustomerLast_Name();
+	string getAddress();
 	double getTotalPrice();
 	bool getHasShipped();
 	void setcustomerFirst_Name(string cfn);
 	void setcustomerLast_Name(string cln);
+	void setAddress(string a);
 	void setPriority(char p);	// Input should be: o, O, r, R, s, S
 	void setHasShipped();
-	void setDate();
 	void addToCart(Art a);
 	void removeFromCart(Art a);
 	void printCart(ostream& os);
+	void setTotalPrice();
 	void userInteraction(string type);
 
 	friend ostream& operator<<(ostream& os, const Order& o);
