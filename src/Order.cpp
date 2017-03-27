@@ -269,7 +269,4 @@ void Order::userInteraction(string type) {
 
 }
 
-void Order::placeOrder()
-{
 
-}

@@ -29,7 +29,7 @@ private:
     void searchByArtist(Customer& c, Order& o);
     void searchByTitle(Customer& c, Order& o);
     void purchaseItem(Art& a, Order& o);
-    void Checkout(Order& o, Customer& c);
+    void checkOut(Order& o, Customer& c);
     void inventoryByArtistMenu(Customer& c, Order& o);
     void inventoryByTitleMenu(Customer& c, Order& o);
     Customer checkCustomer();

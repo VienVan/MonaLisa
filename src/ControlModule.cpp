@@ -164,37 +164,43 @@ void ControlModule::purchaseItem(Art& a, Order& o) {
 	o.addToCart(a);
 }
 
-void Checkout(Order& o, Customer& c){
+void ControlModule::checkOut(Order& o, Customer& c){
 	o.setTotalPrice();
-	string choice;
-	while(1){
-		cout << "Please Select A Shipping Option:" << endl;
-		cout << "1. Standard Shipping ()" << endl;
-		cout << "2. Rush Shipping ()" << endl;
-		cout << "3. Overnight Shipping ()" << endl;
-		cout << "Please Enter the Number Associated With the Choice You Want: ";
-		getline(cin, choice);
-		if(atoi(choice.c_str()) > 3 || atoi(choice.c_str()) < 1){
-			cout << "Invalid Input. Please Try Again" << endl;
-			continue;
-		} else
-			break;
-	}
-	cout << endl;
-	switch (atoi(choice.c_str())){
-		case 1:
-			o.setPriority('S');
-			break;
-		case 2:
-			o.setPriority('R');
-			break;
-		case 3:
-			o.setPriority('O');
-			break;
-	}
-	cout << "Review Your Order" << endl;
-	//cout << o << endl;
-	//cout << "Is Everything Correct? (Enter )"
+	string shipping_choice, review_choice;
+	do
+	{
+
+		while(atoi(shipping_choice.c_str()) > 3 || atoi(shipping_choice.c_str()) < 1)
+		{
+			cout << "Please Select A Shipping Option:" << endl;
+			cout << "1. Standard Shipping (3 - 5 business days)" << endl;
+			cout << "2. Rush Shipping ( 1 - 3 business days)" << endl;
+			cout << "3. Overnight Shipping (next day deliver)" << endl;
+			cout << "4. Go back" << endl;
+			cout << "Please Enter the Number Associated With the Choice You Want: ";
+			getline(cin, shipping_choice);
+		}
+		cout << endl;
+		switch (atoi(shipping_choice.c_str()))
+		{
+			case 1:
+				o.setPriority('S');
+				break;
+			case 2:
+				o.setPriority('R');
+				break;
+			case 3:
+				o.setPriority('O');
+				break;
+			case 4:
+				return;
+				break;
+		}
+		cout << "Review Your Order: " << endl;
+		cout << o << endl;
+		cout << "Is Everything Correct? (Enter y or n): ";
+		getline(cin, review_choice);
+	} while(toupper(review_choice.c_str()[0]) != 'Y');
 }
 void ControlModule::inventoryByArtistMenu(Customer& c, Order& o) {
 	string choice2;
@@ -427,10 +433,11 @@ void ControlModule::customerInteraction() {
 		cout << "1. Browse inventory by Artist" << endl
 			 << "2. Browse inventory by Title" << endl
 			 << "3. Go To Checkout" << endl
-			 << "4. View Purchases" << endl << "5. Quit" << endl
+			 << "4. View Purchases" << endl
+			 << "5. Quit" << endl
 			 << "Enter The Number Associated With Your Choice: ";
 		getline(cin, choice);
-		if (atoi(choice.c_str()) > 4 || atoi(choice.c_str()) < 1) {
+		if (atoi(choice.c_str()) > 5 || atoi(choice.c_str()) < 1) {
 			cout << "Invalid Input. Please Try Again." << endl;
 			cout << endl;
 			continue;
@@ -443,7 +450,7 @@ void ControlModule::customerInteraction() {
 			inventoryByTitleMenu(customerCopy, currentOrder);
 			break;
 		case 3:
-			currentOrder.placeOrder();
+			this->checkOut(currentOrder, customerCopy);
 			break;
 		case 4:
 			break;
@@ -451,6 +458,6 @@ void ControlModule::customerInteraction() {
 			cout << "Returning to the Previous Menu\n";
 			break;
 		}
-	} while (atoi(choice.c_str()) != 4);
-	cout << "After while loops" << endl;
+	} while (atoi(choice.c_str()) != 5);
+
 }
