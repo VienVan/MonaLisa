@@ -151,7 +151,7 @@ class BST
         //calls the findHelper function to search for the value recursively
         //Pre: !isEmpty()
 
-        bstdata find2(bstdata value);
+        bstdata findNode(bstdata value);
         /************************************************************
         *                       MANIP. FUNCTIONS                    *
         *************************************************************/
@@ -559,12 +559,12 @@ void BST<bstdata>::destructorHelper(NodePtr root)
 }
 
 template <class bstdata>
-bstdata BST<bstdata>::find2(bstdata value){
+bstdata BST<bstdata>::findNode(bstdata value){
 	if(!find(value) || getSize() == 0){
 		cout << "The item could not be found" << endl;
 		return value;
 	} else{
-		findHelper2(root, value);
+		return findHelper2(root, value);
 	}
 }
 

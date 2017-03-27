@@ -8,7 +8,7 @@
 
 #include <iomanip>
 #include "Art.h"
-Art::Art() : title(""), artist(""), type(""), medium(""), price(0.0), year(0), sortByTitle(true){}
+Art::Art() : title(""), artist(""), type(""), medium(""), price(0.0), year(0), sortByTitle(false){}
 
 /*
 
@@ -30,6 +30,7 @@ Art::Art(string t, string a, string g, string m, double p, unsigned int y) {
 	medium = m;
 	price = p;
 	year = y;
+	sortByTitle = false;
 }
 
 void Art::setTitle(string t) {
@@ -81,17 +82,21 @@ unsigned int Art::getYear() {
 }
 
 ostream& operator<<(ostream& os, const Art& art) {
-	os << art.title << endl;
-	os << art.artist << endl;
-	os << art.type << endl;
-	os << art.medium << endl;
-	os << art.year << endl;
-	os << fixed << setprecision(0) << art.price << endl;
+	os << endl;
+	os << "Title: " << art.title << endl;
+	os << "Artist: " << art.artist << endl;
+	os << "Type: " << art.type << endl;
+	os << "Medium: " << art.medium << endl;
+	os << "Year: " << art.year << endl;
+	os << "Price: " << fixed << setprecision(0) << art.price << endl;
 	return os;
 }
 
 bool Art::operator==(const Art& art) {
-	return artist == art.artist && title == art.title && year == art.year;
+	if(sortByTitle)
+		return title == art.title;
+	else
+		return artist == art.artist;
 }
 
 bool Art::operator<(const Art& art) {
@@ -99,34 +104,20 @@ bool Art::operator<(const Art& art) {
 	string last_name(artist, artist.find(" ") + 1);
 	string first_name2(art.artist, 0, art.artist.find(" "));
 	string last_name2(art.artist, artist.find(" ") + 1);
-	if (sortByTitle) {
-		if (title == art.title) {
-			if (last_name == last_name2) {
-				if (first_name == first_name2) {
-					if (year == art.year)
-						return false;
-					else
-						return year < art.year;
-				} else
-					return first_name < first_name2;
-			} else
-				return last_name < last_name2;
-		} else
-			return title < art.title;
-	} else {
-		if (last_name == last_name2) {
-			if (first_name == first_name2) {
-				if (title == art.title) {
-					if (year == art.year)
-						return false;
-					else
-						return year < art.year;
-				} else
-					return title < art.title;
-			} else
-				return first_name < first_name2;
-		} else
+	if (sortByTitle)
+	{
+		return title < art.title;
+	}
+	else
+	{
+		if (last_name == last_name2)
+		{
+			return first_name < first_name2;
+		}
+		else
+		{
 			return last_name < last_name2;
+		}
 	}
 }
 
@@ -135,33 +126,19 @@ bool Art::operator>(const Art& art) {
 	string last_name(artist, artist.find(" ") + 1);
 	string first_name2(art.artist, 0, art.artist.find(" "));
 	string last_name2(art.artist, artist.find(" ") + 1);
-	if (sortByTitle) {
-		if (title == art.title) {
-			if (last_name == last_name2) {
-				if (first_name == first_name2) {
-					if (year == art.year)
-						return false;
-					else
-						return year > art.year;
-				} else
-					return last_name > last_name2;
-			} else
-				return first_name > first_name2;
-		} else
-			return title > art.title;
-	} else {
-		if (last_name == last_name2) {
-			if (first_name == first_name2) {
-				if (title == art.title) {
-					if (year == art.year)
-						return false;
-					else
-						return year > art.year;
-				} else
-					return title > art.title;
-			} else
-				return first_name > first_name2;
-		} else
+	if (sortByTitle)
+	{
+		return title > art.title;
+	}
+	else
+	{
+		if (last_name == last_name2)
+		{
+			return first_name > first_name2;
+		}
+		else
+		{
 			return last_name > last_name2;
+		}
 	}
 }

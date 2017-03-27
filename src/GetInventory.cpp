@@ -21,7 +21,7 @@ int main()
 	int year = 0;
 	double price = 0;
 
-	artArtist.sortByTitle = false;
+	artTitle.sortByTitle = true;
 
 	cout << "Welcome to Project!" << endl << endl;
 

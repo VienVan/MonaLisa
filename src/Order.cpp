@@ -12,10 +12,10 @@
 #include "Order.h"
 
 void Order::setDate() {
-	time_t now = time(0);
-	char* dt = ctime(&now);
-	date = dt;
-	delete dt;
+
+
+
+	date = "11/22/1999";
 }
 
 Order::Order() :
@@ -231,10 +231,13 @@ void Order::setTotalPrice() {
 void Order::userInteraction(string type) {
 	string choice;
 	if (type == "employee") {
-		cout << "\tMona Lisa Art Dealer" << endl << "\t Orders " << endl
-				<< "1. View Orders by Priority" << endl << "2. Ship an Order"
-				<< endl << "3. Exit " << endl;
-	} else {
+		cout << "\tMona Lisa Art Dealer" << endl
+			 << "\t Orders " << endl
+			 << "1. View Orders by Priority" << endl
+			 << "2. Ship an Order"<< endl
+			 << "3. Exit " << endl;
+	} else
+	{
 		string choice;
 		cout << "\tMona Lisa Art Dealer" << endl << "\tPlace an order" << endl
 				<< endl << "First Name: ";
@@ -256,11 +259,17 @@ void Order::userInteraction(string type) {
 		}
 		cout << "Would you like to purchase this item? (y or n)" << endl;
 		getline(cin, choice);
-		if (choice == "y" || choice == "Y") {
+		if (choice == "y" || choice == "Y")
+		{
 			cout
 					<< "Your order has been placed. Thank you for shopping with us."
 					<< endl;
 		}
 	}
+
+}
+
+void Order::placeOrder()
+{
 
 }
