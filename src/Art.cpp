@@ -94,8 +94,12 @@ ostream& operator<<(ostream& os, const Art& art) {
 
 bool Art::operator==(const Art& art) {
 	if(sortByTitle)
+	{
+		cout << "sorted by ttile" << endl;
 		return title == art.title;
+	}
 	else
+		cout << "not sorted by title" << endl;
 		return artist == art.artist;
 }
 
@@ -122,8 +126,8 @@ bool Art::operator<(const Art& art) {
 }
 
 bool Art::operator>(const Art& art) {
-	string first_name(artist, 0, artist.find(" "));
-	string last_name(artist, artist.find(" ") + 1);
+	string first_name(artist, 0, artist.find(" ") + 1);
+	string last_name(artist, artist.find(" ") );
 	string first_name2(art.artist, 0, art.artist.find(" "));
 	string last_name2(art.artist, artist.find(" ") + 1);
 	if (sortByTitle)

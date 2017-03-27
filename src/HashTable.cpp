@@ -75,7 +75,7 @@ int HashTable::search(Customer c)
 void HashTable::insert(Customer c)
 {
 	// concatenate title and author for key
-	string key = c.getFirst_Name() + c.getLast_Name() + c.getAddress();
+	string key = c.getFirst_Name() + c.getLast_Name();
 
 	// get index to insert to
 	int index = hash(key);
@@ -185,18 +185,26 @@ void HashTable::userInteraction()
 
 }
 
-Customer HashTable::getItem(Customer& c){
-	if(search(c) != -1){
+Customer HashTable::getItem(Customer& c)
+{
+	Customer temp_customer;
+	if(search(c) != -1)
+	{
 		int index = search(c);
 		Table[index].startIterator();
-		while(!Table[index].offEnd()){
-			if(Table[index].getIterator() == c){
-				return Table[index].getIterator();
+		while(!Table[index].offEnd())
+		{
+			if(Table[index].getIterator() == c)
+			{
+				temp_customer = c;
 			}
 			Table[index].advanceIterator();
 		}
-	} else{
-		cout << "It is not in the list" << endl;
-		return Customer();
 	}
+	else
+	{
+		cout << "It is not in the list" << endl;
+		temp_customer = Customer();
+	}
+	return temp_customer;
 }

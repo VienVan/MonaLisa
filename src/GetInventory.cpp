@@ -47,7 +47,12 @@ int main()
 
 	do
 	{
+
 		getline(infile,title);
+		if(title.empty())
+		{
+			break;
+		}
 		artTitle.setTitle(title);
 		artArtist.setTitle(title);
 
@@ -80,9 +85,7 @@ int main()
 		inventoryArtist->insert(artArtist);
 
 
-
-		count--;
-	}while(count != 0);
+	}while(!infile.eof());
 
 	infile.close();
 

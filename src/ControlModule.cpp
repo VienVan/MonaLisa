@@ -65,15 +65,14 @@ void ControlModule::searchByArtist(Customer& c, Order& o) {
 		cout << endl;
 		cout << "Please Enter the Artist of the Piece you are searching for: ";
 		getline(cin, artist);
-		cout << endl;
 		Art copy;
 		copy.setArtist(artist);
-		if (inventoryArtist->find(copy)) {
+		if (inventoryArtist->find(copy))
+		{
 			copy = inventoryArtist->findNode(copy);
 			cout << "We Found an Item With the Artist You Entered:" << endl;
 			cout << copy << endl;
-			cout
-					<< "Would You Like to Purchase This Item? (Please Enter Y for Yes and N for No): ";
+			cout << "Would You Like to Purchase This Item? (Please Enter Y for Yes and N for No): ";
 			getline(cin, choice);
 			while (toupper(choice.c_str()[0]) == 'Y'
 					|| toupper(choice.c_str()[0]) == 'N') {
@@ -87,15 +86,14 @@ void ControlModule::searchByArtist(Customer& c, Order& o) {
 					cout << "We Found an Item With the Artist You Entered:"
 							<< endl;
 					cout << copy << endl;
-					cout
-							<< "Would You Like to Purchase This Item? (Please Enter Y for Yes and N for No): ";
+					cout << "Would You Like to Purchase This Item? (Please Enter Y for Yes and N for No): ";
 					getline(cin, choice);
 					continue;
 				}
 			}
-		} else
+		}
+		else
 		{
-			cout << "Art: " << copy << endl;
 			cout << "We Could Not Find What You Were Looking." << endl;
 		}
 
@@ -112,20 +110,21 @@ void ControlModule::searchByArtist(Customer& c, Order& o) {
 
 void ControlModule::searchByTitle(Customer& c, Order& o) {
 	string title, choice;
-	while (1) {
+	while (1)
+	{
 		cout << endl;
-		cout << "Please Enter the Title of the Piece you are searching for: "
-				<< endl;
+		cout << "Please Enter the Artist of the Piece you are searching for: ";
 		getline(cin, title);
-
 		Art copy;
 		copy.setTitle(title);
-		if (inventoryTitle->find(copy)) {
+		copy.sortByTitle = true;
+		cout << "before if copy: " << copy << endl;
+		if (inventoryTitle->find(copy))
+		{
 			copy = inventoryTitle->findNode(copy);
-			cout << "We Found an Item With the Title You Entered:" << endl;
+			cout << "We Found an Item With the Artist You Entered:" << endl;
 			cout << copy << endl;
-			cout
-					<< "Would You Like to Purchase This Item? (Please Enter Y for Yes and N for No): ";
+			cout << "Would You Like to Purchase This Item? (Please Enter Y for Yes and N for No): ";
 			getline(cin, choice);
 			while (toupper(choice.c_str()[0]) == 'Y'
 					|| toupper(choice.c_str()[0]) == 'N') {
@@ -139,17 +138,19 @@ void ControlModule::searchByTitle(Customer& c, Order& o) {
 					cout << "We Found an Item With the Title You Entered:"
 							<< endl;
 					cout << copy << endl;
-					cout
-							<< "Would You Like to Purchase This Item? (Please Enter Y for Yes and N for No): ";
+					cout << "Would You Like to Purchase This Item? (Please Enter Y for Yes and N for No): ";
 					getline(cin, choice);
 					continue;
 				}
 			}
-		} else
+		}
+		else
+		{
+			cout << "Art: " << copy << endl;
 			cout << "We Could Not Find What You Were Looking." << endl;
+		}
 
-		cout
-				<< "Would You Like to Continue Searching (Please Enter Y for Yes and N for No): ";
+		cout << "Would You Like to Continue Searching (Please Enter Y for Yes and N for No): ";
 		getline(cin, choice);
 		if (toupper(choice.c_str()[0]) == 'Y')
 			continue;
@@ -204,6 +205,8 @@ void ControlModule::checkOut(Order& o, Customer& c){
 
 	orders->addToList(o);
 	c.addOrder(o);
+	customers->remove(c);
+	customers->insert(c);
 	o = Order();
 	cout << "Your order has been placed." << endl;
 	cout << "Thank You For Shopping With Us" << endl;
@@ -312,6 +315,21 @@ Customer ControlModule::checkCustomer() {
 					cout << "Invalid Input. Please Try Again." << endl;
 				}
 			} while(toupper(choice2.c_str()[0]) != 'Y' && toupper(choice2.c_str()[0]) != 'N');
+		} else{
+			cout << "Cannot find you information." << endl;
+			cout << "Please Enter Your House Number: " << endl;
+			getline(cin, house_number);
+			cout << "Please enter your street address: " << endl;
+			getline(cin, street_address);
+			address = house_number + street_address;
+			cout << "Please Enter The City You Live In: ";
+			getline(cin, city);
+			temp_customer.setAddress(address);
+			cout << "setAddress" << endl;
+			temp_customer.setCity(city);
+			cout << "setCity" << endl;
+			customers->insert(temp_customer);
+			cout << "insert customer" << endl;
 		}
 	}
 	else

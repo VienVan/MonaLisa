@@ -300,12 +300,15 @@ int BST<bstdata>::getHeightHelper(NodePtr root)
 template <class bstdata>
 bool BST<bstdata>::findHelper(NodePtr root, bstdata value)
 {
+
 	if(value == root->data)
 	{
+
 		return true;
 	}
 	else if(value < root->data)
 	{
+
 		if(root->left == NULL)
 		{
 			return false;
@@ -317,6 +320,7 @@ bool BST<bstdata>::findHelper(NodePtr root, bstdata value)
 	}
 	else
 	{
+
 		if(root->right == NULL)
 		{
 			return false;
@@ -461,6 +465,7 @@ int BST<bstdata>::getHeight()
 template <class bstdata>
 bool BST<bstdata>::find(bstdata value)
 {
+
 	assert(!isEmpty());
 	return findHelper(root, value);
 }
@@ -516,8 +521,6 @@ void BST<bstdata>::inOrderPrintHelper(NodePtr root, ostream& os)
 		inOrderPrintHelper(root->left, os);
 		os << root->data;
 		os << endl;
-		cout << root->data;
-		cout << endl;
 		inOrderPrintHelper(root->right, os);
 	}
 }
