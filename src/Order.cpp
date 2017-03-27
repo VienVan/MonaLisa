@@ -1,9 +1,6 @@
 /*
-
  * Vincent Ha
-
  * CIS 22C, Winter 2017
-
  */
 
 #include <locale>
@@ -218,7 +215,7 @@ void Order::userInteraction(string type)
 			 << "2. Ship an Order" << endl
 			 << "3. Exit " << endl;
 	}
-	else
+	else if(type == "order")
 	{
 		string choice;
 		cout <<"\tMona Lisa Art Dealer" << endl
@@ -245,6 +242,7 @@ void Order::userInteraction(string type)
 		{
 			cout << "Your order has been placed. Thank you for shopping with us." << endl;
 		}
+
 	}
 
 

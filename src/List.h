@@ -338,7 +338,7 @@ int List<listdata>::linearSearch(listdata data)
 	int i = 1;
 	while(iterator != NULL)
 	{
-		if(iterator->data == data)
+		if (iterator->data == data)
 		{
 			return i;
 		}

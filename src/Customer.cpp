@@ -1,12 +1,10 @@
 /*
-
  * Vincent Ha
-
  * CIS 22C, Winter 2017
-
  */
 
 #include "Customer.h"
+#include "Order.h"
 
 Customer::Customer() : first_name(""), last_name(""), address(""), city(""), zip() {}
 
@@ -54,7 +52,7 @@ void Customer::shippedOrder(Order o){
 		while(!orderHistory.offEnd()){
 			if(orderHistory.getIterator() == o){
 				Order temp (orderHistory.getIterator());
-				temp.setHasShipped();
+//				temp.setHasShipped();
 				orderHistory.removeIterator();
 				if(orderHistory.isEmpty()){
 					orderHistory.insertFirst(temp);
@@ -85,6 +83,11 @@ void Customer::printOrderHistory(ostream& os) {
 		}
 	}
 }
+
+bool Customer::operator==(const Customer& customer) {
+	return first_name == customer.first_name && last_name == customer.last_name;
+}
+
 
 ostream& operator<<(ostream& os, const Customer& c) {
 	os << c.first_name << " " << c.last_name << endl;
@@ -131,10 +134,7 @@ int Customer::getZip() {
 	return zip;
 }
 
-
-
 void Customer::userInteraction()
 {
 	cout << "Customers suck\n";
 }
-

@@ -20,11 +20,12 @@ private:
     BST<Art> *inventoryArtist;
 
 public:
+    ControlModule();
     ControlModule(BST<Art> *invTitle, BST<Art> *invArtist);
     ~ControlModule();
-	void userInteraction();
-	void employeeInteraction();
-	void customerInteraction();
+	void userInteraction(ostream& os);
+	void employeeInteraction(ostream& os);
+	void customerInteraction(ostream& os);
 };
 
 #endif

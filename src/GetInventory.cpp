@@ -12,6 +12,7 @@ int main()
 	BST<Art> *inventoryTitle = new BST<Art>;
 	BST<Art> *inventoryArtist = new BST<Art>;
 	Art artTitle;
+	Art artArtist;
 	ofstream outfile;
 	ifstream infile;
 	string inName, outName, temp, title, artist, genre, medium, prompt;
@@ -19,6 +20,8 @@ int main()
 	int info = 0;
 	int year = 0;
 	double price = 0;
+
+	artArtist.sortByTitle = false;
 
 	cout << "Welcome to Project!" << endl << endl;
 
@@ -41,8 +44,7 @@ int main()
 	cout << "\tYun Cao, Vincent Ha, Jimmy Nguyen, Kota Iwamoto, Vien Van\n";
 
 	// coping art object to artArtist
-	Art artArtist(artTitle);
-	artArtist.sortByTitle = false;
+
 	do
 	{
 		getline(infile,title);
@@ -84,9 +86,10 @@ int main()
 
 	infile.close();
 
+	outfile.open("output.txt");
 
 	ControlModule runner(inventoryTitle, inventoryArtist);
-	runner.userInteraction();
+	runner.userInteraction(outfile);
 
 
 	cout << "Thank you! Goodbye!" << endl;

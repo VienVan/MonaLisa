@@ -1,9 +1,6 @@
 /*
-
  * Vincent Ha
-
  * CIS 22C, Winter 2017
-
  */
 
 #ifndef ORDER_H_

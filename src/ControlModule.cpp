@@ -1,6 +1,7 @@
-
 //#define _CRT_SECURE_NO_WARNINGS
 #include "ControlModule.h"
+
+ControlModule::ControlModule() {}
 
 ControlModule::ControlModule(BST<Art> *invTitle, BST<Art> *invArtist)
 {
@@ -18,7 +19,7 @@ ControlModule::~ControlModule()
 //    customer = nullptr;
 }
 
-void ControlModule::userInteraction()
+void ControlModule::userInteraction(ostream& os)
 {
 
 		string choice;
@@ -33,14 +34,14 @@ void ControlModule::userInteraction()
 	        getline(cin, choice);
 	        switch(atoi(choice.c_str()))
 	        {
-				case 1: { employeeInteraction();} break;
-				case 2: { customerInteraction();} break;
+				case 1: { employeeInteraction(os);} break;
+				case 2: { customerInteraction(os);} break;
 				default: {cout << "Thank you for shopping at Mona Lisa\n";} break;
 	        }
 		} while (atoi(choice.c_str()) != 3);
 }
 
-void ControlModule::employeeInteraction()
+void ControlModule::employeeInteraction(ostream& os)
 {
 	string key = "monalisa";
 	string password = "";
@@ -78,7 +79,7 @@ void ControlModule::employeeInteraction()
 //	order->userInteraction();
 }
 
-void ControlModule::customerInteraction()
+void ControlModule::customerInteraction(ostream& os)
 {
 	string choice;
 	do
@@ -96,8 +97,9 @@ void ControlModule::customerInteraction()
        {
 			case 1: { inventoryArtist->userInteraction();;} break;
 			case 2: { inventoryTitle->userInteraction();;} break;
-			case 3: { order->userInteraction("customer");} break;
-			case 4: { } break;
+			case 3: { order->userInteraction("order");;} break;
+			case 4: { order->printCart(os);;} break;
+			case 5: { } break;
 			default: {cout << "Thank you for shopping at Mona Lisa\n";} break;
        }
 	} while(atoi(choice.c_str()) != 4);

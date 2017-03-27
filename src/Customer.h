@@ -1,9 +1,6 @@
 /*
-
 * Vincent Ha
-
 * CIS 22C, Winter 2017
-
 */
 
 #ifndef CUSTOMER_H_
@@ -36,6 +33,7 @@ public:
     void addOrder(Order& o);
     void shippedOrder(Order o);
     void printOrderHistory(ostream& os);
+    bool operator==(const Customer& customer);
     friend ostream& operator<< (ostream& os, const Customer& c);
     void userInteraction();
     string getFirst_Name();
@@ -46,6 +44,4 @@ public:
     int getZip();
 };
 
-
-
-#endif /* CUSTOMER_H_ */
+#endif
