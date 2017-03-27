@@ -129,9 +129,61 @@ void HashTable::printTable()
 
 void HashTable::userInteraction()
 {
-	cout << "HashTable interaction" << endl;
-}
+	string choice;
+	string firstName, lastName;
+	do
+	{
+		cout << "Customer's Info" << endl;
+		cout << "1. Search for a customer by name" << endl;
+		cout << "2. Display unsorted customer information" << endl;
+		cout << "3. Exit" << endl;
+		cout << "Enter your choice: ";
+		getline(cin, choice);
+		if(atoi(choice.c_str()) > 3 || atoi(choice.c_str()) < 1)
+		{
+			cout << "Invalid Input. Please Try Again." << endl;
+			cout << endl;
+			continue;
+		}
+		switch (atoi(choice.c_str()))
+		{
+			case 1:
+			{
+				cout << "Enter the First Name of the Customer: ";
+				getline(cin,firstName);
+				cout << "Enter the Last Name of the Customer: ";
+				getline(cin, lastName);
 
+				Customer customer_copy;
+				customer_copy.setFirst_Name(firstName);
+				customer_copy.setLast_Name(lastName);
+				if(search(customer_copy) != -1)
+				{
+					customer_copy = getItem(customer_copy);
+					cout << "Found A Customer" << endl;
+					cout << customer_copy << endl;
+				}
+				else
+				{
+					cout << "Customer Not Found" << endl;
+				}
+				cout << endl;
+			}
+			break;
+			case 2:
+			{
+				printTable();
+			}
+			break;
+			default:
+			{
+				cout << "hello world"<< endl;
+			}
+			break;
+		}
+	} while(atoi(choice.c_str()) != 3);
+
+}
 
 Customer HashTable::getItem(Customer& c){
 	if(search(c) != -1){

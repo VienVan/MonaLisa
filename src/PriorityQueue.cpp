@@ -75,8 +75,9 @@ void PriorityQueue::printShippingList(ostream& os){
 	os << "---------------------" << endl;
 	os << endl;
 	for(int a = 1; a <= size; a++){
-		os << shippingList[a] << endl;
+		os << shippingList[a];
 	}
+	cout << endl;
 }
 
 int PriorityQueue::getSize(){

@@ -40,6 +40,7 @@ public:
 	void userInteraction();
 	void employeeInteraction();
 	void customerInteraction();
+	void viewPurchases(Customer& c);
 };
 
 

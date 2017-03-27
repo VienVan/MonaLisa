@@ -201,6 +201,12 @@ void ControlModule::checkOut(Order& o, Customer& c){
 		cout << "Is Everything Correct? (Enter y or n): ";
 		getline(cin, review_choice);
 	} while(toupper(review_choice.c_str()[0]) != 'Y');
+
+	orders->addToList(o);
+	c.addOrder(o);
+	o = Order();
+	cout << "Your order has been placed." << endl;
+	cout << "Thank You For Shopping With Us" << endl;
 }
 void ControlModule::inventoryByArtistMenu(Customer& c, Order& o) {
 	string choice2;
@@ -393,11 +399,11 @@ void ControlModule::employeeInteraction() {
 		}
 			break;
 		case 3: {
-			inventoryArtist->userInteraction();
+			inventoryArtist->employeeInteraction(cout);
 		}
 			break;
 		case 4: {
-			inventoryTitle->userInteraction();
+			inventoryTitle->employeeInteraction(cout);
 		}
 			break;
 		default: {
@@ -453,6 +459,7 @@ void ControlModule::customerInteraction() {
 			this->checkOut(currentOrder, customerCopy);
 			break;
 		case 4:
+			viewPurchases(customerCopy);
 			break;
 		default:
 			cout << "Returning to the Previous Menu\n";
@@ -460,4 +467,9 @@ void ControlModule::customerInteraction() {
 		}
 	} while (atoi(choice.c_str()) != 5);
 
+}
+
+void ControlModule::viewPurchases(Customer& c)
+{
+	cout << c << endl;
 }

@@ -166,7 +166,8 @@ class BST
         //Pre: The value is contained in the Binary Search Tree
         //If the value is not in the Binary Search Tree, the tree is left unchanged
 
-        void userInteraction();
+
+        void employeeInteraction(ostream& os);
 };
 
 
@@ -515,11 +516,12 @@ void BST<bstdata>::inOrderPrintHelper(NodePtr root, ostream& os)
 		inOrderPrintHelper(root->left, os);
 		os << root->data;
 		os << endl;
+		cout << root->data;
+		cout << endl;
 		inOrderPrintHelper(root->right, os);
-
 	}
-
 }
+
 
 template <class bstdata>
 void BST<bstdata>::preOrderPrintHelper(NodePtr root, ostream& os)
@@ -594,31 +596,93 @@ void BST<bstdata>::remove(bstdata value)
 	root = removeHelper(root, value);
 }
 
+
+
+
 template <class bstdata>
-void BST<bstdata>::userInteraction()
+void BST<bstdata>::employeeInteraction(ostream& os)
 {
+	BST<Art> tree;
+	Art art;
+	string title;
+	string artist;
+	string type;
+	string medium;
+	double price;
+	unsigned int year;
+
 	string choice;
 	do
 	{
 		cout << "\t Mona Lisa Art Dealer" << endl
 			 << "\t Art Inventory" << endl
-			 << "1. Search by title" << endl
-			 << "2. Search by Artist" << endl
+			 << "1. Insert" << endl
+			 << "2. Remove" << endl
 			 << "3. List Full Inventory" << endl
-			 << "4. Exit" << endl;
+			 << "4. Exit" << endl
+			 << "Enter Your Choice: ";
 		getline(cin, choice);
 		switch(atoi(choice.c_str()))
 		{
 			case 1: {
-				cout << "Vien is awesome" << endl;
+				cout << "New Art Piece Info" << endl;
+				cout << "------------------" << endl;
+
+				cout << "Title: ";
+				getline(cin, title);
+				art.setTitle(title);
+
+				cout << "Author: ";
+				getline(cin, artist);
+				art.setArtist(artist);
+
+				cout << "Medium: ";
+				getline(cin, medium);
+				art.setMedium(medium);
+
+				cout << "Genre: ";
+				getline(cin,type);
+				art.setType(type);
+
+				cout << "Price:";
+				cin >> price;
+				art.setPrice(price);
+
+				cout << "Year: ";
+				cin >> year;
+				art.setYear(year);
+				cout << endl;
+
+				insert(art);
+				inOrderPrint(os);
 			} break;
-			case 2: { } break;
-			case 3: { this->inOrderPrint(cout); } break;
-			default: {cout << "Thank you for shopping at Mona Lisa\n";} break;
+			case 2: {
+				cout << "Enter the information about the art you wish to remove." << endl;
+
+				cout << "Title: ";
+				getline(cin, title);
+				art.setTitle(title);
+				cout << "Author: ";
+				getline(cin, artist);
+				art.setArtist(artist);
+
+				if(!find(art))
+				{
+					cout << "Sorry, " << art.getTitle() << " is not in this collection!" << endl;
+				}
+				else
+				{
+					remove(art);
+					cout << art.getTitle() << " has been removed!" << endl;
+				}
+					cout << endl;
+
+			} break;
+			case 3: { this -> inOrderPrint(os); } break;
+			case 4: { } break;
+			default:{cout << "Thank you for shopping at Mona Lisa\n";} break;
 		}
 	} while (atoi(choice.c_str()) != 4);
 }
-
-
 
 #endif /* BST_H_ */
