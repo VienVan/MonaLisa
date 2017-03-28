@@ -88,14 +88,19 @@ int main()
 	}while(!infile.eof());
 
 	infile.close();
-
+	Art a = inventoryArtist->getRoot();
+	cout << a << endl;
+	inventoryArtist->remove(a);
+	cout << "new art inventory" << endl;
+	inventoryArtist->inOrderPrint(cout);
 //	infile.open("Customer.txt");
 
 
 	outfile.open("output.txt");
 
-	ControlModule runner(inventoryTitle, inventoryArtist);
-	runner.userInteraction();
+//
+//	ControlModule runner(inventoryTitle, inventoryArtist);
+//	runner.userInteraction();
 
 
 	cout << "Thank you! Goodbye!" << endl;

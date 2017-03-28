@@ -15,8 +15,14 @@ ControlModule::ControlModule(BST<Art> *invTitle, BST<Art> *invArtist) {
 }
 
 ControlModule::~ControlModule() {
-//	delete orders;
-//	delete customers;
+	delete orders;
+	delete customers;
+	delete inventoryTitle;
+	delete inventoryArtist;
+	orders = nullptr;
+	customers = nullptr;
+	inventoryTitle = nullptr;
+	inventoryArtist = nullptr;
 }
 
 void ControlModule::orderHandling() {
@@ -27,7 +33,7 @@ void ControlModule::orderHandling() {
 		cout << "\t Order Handling Menu" << endl;
 		cout << "1. View Orders" << endl;
 		cout << "2. Ship First Order" << endl;
-		cout << "3. Exit" << endl;
+		cout << "3. Back to Employee's Menu" << endl;
 		cout << "Enter the Number Associated With Your Choice: ";
 		getline(cin, choice);
 		if (atoi(choice.c_str()) > 3 || atoi(choice.c_str()) < 1) {
@@ -55,6 +61,7 @@ void ControlModule::orderHandling() {
 			else
 			{
 				cout << "All orders have been fulfilled." << endl;
+				cout << endl << endl;
 			}
 			break;
 		default:
@@ -79,9 +86,12 @@ void ControlModule::searchByArtist(Customer& c, Order& o) {
 			cout << "Would You Like to Purchase This Item? (Please Enter Y for Yes and N for No): ";
 			getline(cin, choice);
 			while (toupper(choice.c_str()[0]) == 'Y'
-					|| toupper(choice.c_str()[0]) == 'N') {
-				if (toupper(choice.c_str()[0]) == 'Y') {
+					|| toupper(choice.c_str()[0]) == 'N')
+			{
+				if (toupper(choice.c_str()[0]) == 'Y')
+				{
 					purchaseItem(copy, o);
+//					inventoryArtist->remove(copy);
 					break;
 				} else if (toupper(choice.c_str()[0]) == 'N')
 					break;
@@ -117,23 +127,23 @@ void ControlModule::searchByTitle(Customer& c, Order& o) {
 	while (1)
 	{
 		cout << endl;
-		cout << "Please Enter the Artist of the Piece you are searching for: ";
+		cout << "Please Enter the Title of the Piece you are searching for: ";
 		getline(cin, title);
 		Art copy;
 		copy.setTitle(title);
 		copy.sortByTitle = true;
-		cout << "before if copy: " << copy << endl;
 		if (inventoryTitle->find(copy))
 		{
 			copy = inventoryTitle->findNode(copy);
-			cout << "We Found an Item With the Artist You Entered:" << endl;
+			cout << "We Found an Item With the Title You Entered:" << endl;
 			cout << copy << endl;
-			cout << "Would You Like to Purchase This Item? (Please Enter Y for Yes and N for No): ";
+			cout << "Would You Like to Purchase This Item? (y or n): ";
 			getline(cin, choice);
 			while (toupper(choice.c_str()[0]) == 'Y'
 					|| toupper(choice.c_str()[0]) == 'N') {
 				if (toupper(choice.c_str()[0]) == 'Y') {
 					purchaseItem(copy, o);
+					inventoryTitle->remove(copy);
 					break;
 				} else if (toupper(choice.c_str()[0]) == 'N')
 					break;
@@ -142,7 +152,7 @@ void ControlModule::searchByTitle(Customer& c, Order& o) {
 					cout << "We Found an Item With the Title You Entered:"
 							<< endl;
 					cout << copy << endl;
-					cout << "Would You Like to Purchase This Item? (Please Enter Y for Yes and N for No): ";
+					cout << "Would You Like to Purchase This Item? (y or n): ";
 					getline(cin, choice);
 					continue;
 				}
@@ -150,7 +160,6 @@ void ControlModule::searchByTitle(Customer& c, Order& o) {
 		}
 		else
 		{
-			cout << "Art: " << copy << endl;
 			cout << "We Could Not Find What You Were Looking." << endl;
 		}
 
@@ -167,6 +176,15 @@ void ControlModule::searchByTitle(Customer& c, Order& o) {
 
 void ControlModule::purchaseItem(Art& a, Order& o) {
 	o.addToCart(a);
+	removeFromInventory(o);
+	cout << "new inventory Aritst: ";
+	inventoryArtist->inOrderPrint(cout);
+//	cout << "art from purchase1: " << a << endl;
+//	a.sortByTitle = false;
+//	inventoryArtist->remove(a);
+////	a.sortByTitle = true;
+////	cout << "art from purcahse2" << a << endl;
+////	inventoryTitle->remove(a);
 }
 
 void ControlModule::removeFromInventory(Order& o)
@@ -175,14 +193,13 @@ void ControlModule::removeFromInventory(Order& o)
 	while(!temp_list.isEmpty())
 	{
 		Art a = temp_list.getFirst();
-		Art b = temp_list.getFirst();
+		cout << "Art a: " << a << endl;
 		inventoryArtist->remove(a);
-		b.sortByTitle = true;
-		inventoryTitle->remove(b);
+		a.sortByTitle = true;
+		inventoryTitle->remove(a);
 		temp_list.removeFirst();
-		temp_list.printList(cout);
-		cout << "while 1" << endl;
 	}
+
 }
 void ControlModule::checkOut(Order& o, Customer& c){
 	o.setTotalPrice();
@@ -192,11 +209,12 @@ void ControlModule::checkOut(Order& o, Customer& c){
 
 		while(atoi(shipping_choice.c_str()) > 3 || atoi(shipping_choice.c_str()) < 1)
 		{
+			cout << endl << endl;
 			cout << "Please Select A Shipping Option:" << endl;
-			cout << "1. Standard Shipping (3 - 5 business days)" << endl;
-			cout << "2. Rush Shipping ( 1 - 3 business days)" << endl;
-			cout << "3. Overnight Shipping (next day deliver)" << endl;
-			cout << "4. Go back" << endl;
+			cout << "\t1. Standard Shipping (3 - 5 business days)" << endl;
+			cout << "\t2. Rush Shipping ( 1 - 3 business days)" << endl;
+			cout << "\t3. Overnight Shipping (next day deliver)" << endl;
+			cout << "\t4. Cancel Order (Empties cart)" << endl;
 			cout << "Please Enter the Number Associated With the Choice You Want: ";
 			getline(cin, shipping_choice);
 		}
@@ -213,6 +231,7 @@ void ControlModule::checkOut(Order& o, Customer& c){
 				o.setPriority('O');
 				break;
 			case 4:
+				o = Order();
 				return;
 				break;
 		}
@@ -220,8 +239,11 @@ void ControlModule::checkOut(Order& o, Customer& c){
 		cout << o << endl;
 		cout << "Is Everything Correct? (Enter y or n): ";
 		getline(cin, review_choice);
-		removeFromInventory(o);
-
+		if(toupper((review_choice.c_str())[0]) == 'N')
+		{
+			cout << "Please go back to the main menu and re-place the order" << endl;
+			return;
+		}
 	} while(toupper(review_choice.c_str()[0]) != 'Y');
 
 	orders->addToList(o);
@@ -239,7 +261,7 @@ void ControlModule::inventoryByArtistMenu(Customer& c, Order& o) {
 		cout << "\n\t Mona Lisa Art Dealer\n\t Customer Menu" << endl;
 		cout << "1. List Entire Inventory By Artist" << endl;
 		cout << "2. Search For/Order An Artpiece" << endl;
-		cout << "3. Exit" << endl;
+		cout << "3. Checkout" << endl;
 		cout << "Enter The Number Associated With Your Choice: ";
 		getline(cin, choice2);
 		switch (atoi(choice2.c_str())) {
@@ -248,6 +270,9 @@ void ControlModule::inventoryByArtistMenu(Customer& c, Order& o) {
 			break;
 		case 2:
 			searchByArtist(c, o);
+			break;
+		case 3:
+			checkOut(o, c);
 			break;
 		default:
 			cout << "Returning to the Previous Menu" << endl;
@@ -263,7 +288,7 @@ void ControlModule::inventoryByTitleMenu(Customer& c, Order& o) {
 		cout << "\n\t Mona Lisa Art Dealer\n\t Customer Menu" << endl;
 		cout << "1. List Entire Inventory By Artist" << endl;
 		cout << "2. Search For/Order An Artpiece" << endl;
-		cout << "3. Exit" << endl;
+		cout << "3. Checkout" << endl;
 		cout << "Enter The Number Associated With Your Choice: ";
 		getline(cin, choice2);
 		switch (atoi(choice2.c_str())) {
@@ -272,6 +297,9 @@ void ControlModule::inventoryByTitleMenu(Customer& c, Order& o) {
 			break;
 		case 2:
 			searchByTitle(c, o);
+			break;
+		case 3:
+			checkOut(o, c);
 			break;
 		default:
 			cout << "Returning to the Previous Menu" << endl;
@@ -283,9 +311,9 @@ void ControlModule::inventoryByTitleMenu(Customer& c, Order& o) {
 
 // get customer info, create temp customer object
 Customer ControlModule::checkCustomer() {
-	string choice, choice2, firstName, lastName, house_number, street_address, address, state, city;
+	string choice, choice2, firstName, lastName, house_number, street_address, address, state, city, zipcode;
 	// check if customer exists
-	cout << "Have You Previously Visited Our Shop? (Enter Y For Yes and N For No): ";
+	cout << "Have You Previously Visited Our Shop? (y or n): ";
 	do
 	{
 		getline(cin, choice);
@@ -311,10 +339,11 @@ Customer ControlModule::checkCustomer() {
 		if (customers->search(temp_customer) != -1)
 		{
 			Customer temp_customer_copy(customers->getItem(temp_customer));
-			do {
+			do
+			{
 				cout << "Is this you?" << endl;
 				cout << temp_customer_copy << endl;
-				cout << "Enter Y For Yes and N For No: ";
+				cout << "Enter y or n: ";
 				getline(cin, choice2);
 				if (toupper(choice2.c_str()[0]) == 'Y')
 				{
@@ -331,41 +360,46 @@ Customer ControlModule::checkCustomer() {
 					temp_customer.setAddress(address);
 					temp_customer.setCity(city);
 					customers->insert(temp_customer);
-				} else
+				}
+				else
 				{
 					cout << "Invalid Input. Please Try Again." << endl;
 				}
 			} while(toupper(choice2.c_str()[0]) != 'Y' && toupper(choice2.c_str()[0]) != 'N');
-		} else{
+		}
+		else
+		{
 			cout << "Cannot find you information." << endl;
-			cout << "Please Enter Your House Number: " << endl;
+			cout << "Please Enter Your House Number: ";
 			getline(cin, house_number);
-			cout << "Please enter your street address: " << endl;
+			cout << "Please enter your street address: ";
 			getline(cin, street_address);
 			address = house_number + street_address;
 			cout << "Please Enter The City You Live In: ";
 			getline(cin, city);
 			temp_customer.setAddress(address);
-			cout << "setAddress" << endl;
 			temp_customer.setCity(city);
-			cout << "setCity" << endl;
+			cout << "Please enter your zipcode: ";
+			getline(cin, zipcode);
+			temp_customer.setZip(atoi(zipcode.c_str()));
 			customers->insert(temp_customer);
-			cout << "insert customer" << endl;
 		}
 	}
 	else
 	{
-		cout << "Please Enter Your House Number: " << endl;
+		cout << "Please Enter Your House Number: ";
 		getline(cin, house_number);
-		cout << "Please enter your street address: " << endl;
+		cout << "Please enter your street address: ";
 		getline(cin, street_address);
 		address = house_number + street_address;
 		cout << "Please Enter The City You Live In: ";
 		getline(cin, city);
 		temp_customer.setAddress(address);
 		temp_customer.setCity(city);
+		cout << "Please enter your zipcode: ";
+		getline(cin, zipcode);
+		temp_customer.setZip(atoi(zipcode.c_str()));
 		customers->insert(temp_customer);
-
 	}
 
 	return temp_customer;
@@ -381,7 +415,7 @@ void ControlModule::userInteraction() {
 				<< "\n\t Are you an employee or customer? \n"
 				<< "1. Employee" << endl
 				<< "2. Customer" << endl
-				<< "3. Exit" << endl << endl
+				<< "3. Exit Shop" << endl << endl
 				<< "Enter The Number Associated With Your Choice: ";
 
 		getline(cin, choice);
@@ -424,7 +458,7 @@ void ControlModule::employeeInteraction() {
 			 << "2. Customers" << endl
 			 << "3. Inventory by Artist" << endl
 			 << "4. Inventory by Title" << endl
-			 << "5. Quit" << endl
+			 << "5. Back to Main Menu" << endl
 			 << "Enter The Number Associated With Your Choice: ";
 		getline(cin, choice);
 		switch (atoi(choice.c_str())) {
@@ -476,9 +510,8 @@ void ControlModule::customerInteraction() {
 		cout << "Welcome " << customerCopy.getFirst_Name() << " " << customerCopy.getLast_Name() << endl;
 		cout << "1. Browse inventory by Artist" << endl
 			 << "2. Browse inventory by Title" << endl
-			 << "3. Go To Checkout" << endl
-			 << "4. View Purchases" << endl
-			 << "5. Quit" << endl
+			 << "3. View Purchases" << endl
+			 << "4. Back to main menu" << endl
 			 << "Enter The Number Associated With Your Choice: ";
 		getline(cin, choice);
 		if (atoi(choice.c_str()) > 5 || atoi(choice.c_str()) < 1) {
@@ -494,16 +527,13 @@ void ControlModule::customerInteraction() {
 			inventoryByTitleMenu(customerCopy, currentOrder);
 			break;
 		case 3:
-			this->checkOut(currentOrder, customerCopy);
-			break;
-		case 4:
 			viewPurchases(customerCopy);
 			break;
 		default:
 			cout << "Returning to the Previous Menu\n";
 			break;
 		}
-	} while (atoi(choice.c_str()) != 5);
+	} while (atoi(choice.c_str()) != 4);
 
 }
 

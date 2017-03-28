@@ -507,9 +507,11 @@ typename BST<bstdata>::NodePtr BST<bstdata>::removeHelper(NodePtr root, bstdata 
     	else
     	{
     		root->data = minimumHelper(root->right);
+    		cout << "root->data in last else: " << root->data << endl;
     		root->right = removeHelper(root->right, minimumHelper(root->right));
     	}
     }
+    cout << "end of removehelper" << endl;
     return root;
 }
 
@@ -596,7 +598,9 @@ void BST<bstdata>::remove(bstdata value)
 {
 	//add code to handle the preconditions
 	assert(find(value));
+	cout << "art from remove: " << value << endl;
 	root = removeHelper(root, value);
+	cout << "after remove" << endl;
 }
 
 
@@ -627,7 +631,8 @@ void BST<bstdata>::employeeInteraction(ostream& os)
 		getline(cin, choice);
 		switch(atoi(choice.c_str()))
 		{
-			case 1: {
+			case 1:
+			{
 				cout << "New Art Piece Info" << endl;
 				cout << "------------------" << endl;
 
@@ -635,7 +640,7 @@ void BST<bstdata>::employeeInteraction(ostream& os)
 				getline(cin, title);
 				art.setTitle(title);
 
-				cout << "Author: ";
+				cout << "Artist: ";
 				getline(cin, artist);
 				art.setArtist(artist);
 
@@ -658,14 +663,16 @@ void BST<bstdata>::employeeInteraction(ostream& os)
 
 				insert(art);
 				inOrderPrint(os);
-			} break;
-			case 2: {
+			}
+			break;
+			case 2:
+			{
 				cout << "Enter the information about the art you wish to remove." << endl;
 
 				cout << "Title: ";
 				getline(cin, title);
 				art.setTitle(title);
-				cout << "Author: ";
+				cout << "Artist: ";
 				getline(cin, artist);
 				art.setArtist(artist);
 
@@ -680,10 +687,10 @@ void BST<bstdata>::employeeInteraction(ostream& os)
 				}
 					cout << endl;
 
-			} break;
+			}
+			break;
 			case 3: { this -> inOrderPrint(os); } break;
-			case 4: { } break;
-			default:{cout << "Thank you for shopping at Mona Lisa\n";} break;
+			default:{ cout << "\nThank you for shopping at Mona Lisa\n";} break;
 		}
 	} while (atoi(choice.c_str()) != 4);
 }
