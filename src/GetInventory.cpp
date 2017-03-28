@@ -88,19 +88,29 @@ int main()
 	}while(!infile.eof());
 
 	infile.close();
-	Art a = inventoryArtist->getRoot();
-	cout << a << endl;
-	inventoryArtist->remove(a);
-	cout << "new art inventory" << endl;
-	inventoryArtist->inOrderPrint(cout);
-//	infile.open("Customer.txt");
-
+//	Art a("title", "first last", "type", "medium", 0.0, 1999);
+//	Art b("title2", "first2 last2", "type2", "medium2", 1.1, 2222);
+//	BST<Art> artTree;
+//	artTree.insert(a);
+//	artTree.insert(b);
+//	artTree.inOrderPrint(cout);
+//	artTree.remove(a);
+//	cout << "new art tree" << endl;
+//	artTree.inOrderPrint(cout);
+////	string temp_art_title;
+////	Art temp_art, temp_art2;
+////	temp_art.setArtist("John Storrs");
+////	temp_art = inventoryArtist->findNode(temp_art);
+////	cout << "temp art: " << temp_art << endl;
+////	inventoryArtist->remove(temp_art);
+////	cout << endl << endl << endl << "new inventory " << endl;
+////	inventoryArtist->inOrderPrint(cout);
 
 	outfile.open("output.txt");
 
-//
-//	ControlModule runner(inventoryTitle, inventoryArtist);
-//	runner.userInteraction();
+
+	ControlModule runner(inventoryTitle, inventoryArtist);
+	runner.userInteraction();
 
 
 	cout << "Thank you! Goodbye!" << endl;

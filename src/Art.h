@@ -21,6 +21,7 @@ private:
 	double price;
 	unsigned int year;
 
+	bool equalsNoCase(string str1, string str2);
 public:
 	bool sortByTitle;
 	Art();

@@ -507,11 +507,9 @@ typename BST<bstdata>::NodePtr BST<bstdata>::removeHelper(NodePtr root, bstdata 
     	else
     	{
     		root->data = minimumHelper(root->right);
-    		cout << "root->data in last else: " << root->data << endl;
     		root->right = removeHelper(root->right, minimumHelper(root->right));
     	}
     }
-    cout << "end of removehelper" << endl;
     return root;
 }
 
@@ -536,7 +534,6 @@ void BST<bstdata>::preOrderPrintHelper(NodePtr root, ostream& os)
 		os << root->data;
 		inOrderPrintHelper(root->left, os);
 		inOrderPrintHelper(root->right, os);
-
 	}
 
 }
@@ -549,7 +546,6 @@ void BST<bstdata>::postOrderPrintHelper(NodePtr root, ostream& os)
 		inOrderPrintHelper(root->left, os);
 		inOrderPrintHelper(root->right, os);
 		os << root->data;
-
 	}
 
 }
@@ -598,11 +594,8 @@ void BST<bstdata>::remove(bstdata value)
 {
 	//add code to handle the preconditions
 	assert(find(value));
-	cout << "art from remove: " << value << endl;
 	root = removeHelper(root, value);
-	cout << "after remove" << endl;
 }
-
 
 
 
@@ -686,7 +679,6 @@ void BST<bstdata>::employeeInteraction(ostream& os)
 					cout << art.getTitle() << " has been removed!" << endl;
 				}
 					cout << endl;
-
 			}
 			break;
 			case 3: { this -> inOrderPrint(os); } break;

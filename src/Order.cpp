@@ -18,9 +18,7 @@ List<Art> Order::getCart()
 
 void Order::setDate() {
 
-
-
-	date = "11/22/1999";
+	date = "03/28/2017";
 }
 
 Order::Order() :

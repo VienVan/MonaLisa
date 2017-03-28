@@ -15,14 +15,8 @@ ControlModule::ControlModule(BST<Art> *invTitle, BST<Art> *invArtist) {
 }
 
 ControlModule::~ControlModule() {
-	delete orders;
-	delete customers;
-	delete inventoryTitle;
-	delete inventoryArtist;
-	orders = nullptr;
-	customers = nullptr;
-	inventoryTitle = nullptr;
-	inventoryArtist = nullptr;
+//	delete orders;
+//	delete customers;
 }
 
 void ControlModule::orderHandling() {
@@ -72,6 +66,8 @@ void ControlModule::orderHandling() {
 
 void ControlModule::searchByArtist(Customer& c, Order& o) {
 	string artist, choice;
+	Art temp_art;
+
 	while (1) {
 		cout << endl;
 		cout << "Please Enter the Artist of the Piece you are searching for: ";
@@ -111,7 +107,7 @@ void ControlModule::searchByArtist(Customer& c, Order& o) {
 			cout << "We Could Not Find What You Were Looking." << endl;
 		}
 
-		cout << "Would You Like to Continue Searching (Please Enter Y for Yes and N for No): ";
+		cout << "Would You Like to Continue Searching (y or n): ";
 		getline(cin, choice);
 		if (toupper(choice.c_str()[0]) == 'Y')
 			continue;
@@ -143,7 +139,6 @@ void ControlModule::searchByTitle(Customer& c, Order& o) {
 					|| toupper(choice.c_str()[0]) == 'N') {
 				if (toupper(choice.c_str()[0]) == 'Y') {
 					purchaseItem(copy, o);
-					inventoryTitle->remove(copy);
 					break;
 				} else if (toupper(choice.c_str()[0]) == 'N')
 					break;
@@ -176,15 +171,12 @@ void ControlModule::searchByTitle(Customer& c, Order& o) {
 
 void ControlModule::purchaseItem(Art& a, Order& o) {
 	o.addToCart(a);
-	removeFromInventory(o);
-	cout << "new inventory Aritst: ";
-	inventoryArtist->inOrderPrint(cout);
-//	cout << "art from purchase1: " << a << endl;
-//	a.sortByTitle = false;
-//	inventoryArtist->remove(a);
-////	a.sortByTitle = true;
-////	cout << "art from purcahse2" << a << endl;
-////	inventoryTitle->remove(a);
+	cout << "art from purchase1: " << a << endl;
+	a.sortByTitle = false;
+	inventoryArtist->remove(a);
+	a.sortByTitle = true;
+	cout << "art from purcahse2" << a << endl;
+	inventoryTitle->remove(a);
 }
 
 void ControlModule::removeFromInventory(Order& o)
@@ -207,7 +199,7 @@ void ControlModule::checkOut(Order& o, Customer& c){
 	do
 	{
 
-		while(atoi(shipping_choice.c_str()) > 3 || atoi(shipping_choice.c_str()) < 1)
+		while(atoi(shipping_choice.c_str()) > 4 || atoi(shipping_choice.c_str()) < 1)
 		{
 			cout << endl << endl;
 			cout << "Please Select A Shipping Option:" << endl;
@@ -422,6 +414,7 @@ void ControlModule::userInteraction() {
 		switch (atoi(choice.c_str())) {
 		case 1: {
 			employeeInteraction();
+//			test();
 		}
 			break;
 		case 2: {
@@ -456,7 +449,7 @@ void ControlModule::employeeInteraction() {
 		cout << "\n\t Mona Lisa Art Dealer\n\t Employee Menu" << endl;
 		cout << "1. Orders" << endl
 			 << "2. Customers" << endl
-			 << "3. Inventory by Artist" << endl
+			 << "3. Inventory by Artist (sorted by first name)" << endl
 			 << "4. Inventory by Title" << endl
 			 << "5. Back to Main Menu" << endl
 			 << "Enter The Number Associated With Your Choice: ";
@@ -540,4 +533,25 @@ void ControlModule::customerInteraction() {
 void ControlModule::viewPurchases(Customer& c)
 {
 	cout << c << endl;
+}
+
+void ControlModule::test()
+{
+	string temp_art_title;
+	Art temp_art, temp_art2;
+	temp_art.setArtist("John Storrs");
+	temp_art = inventoryArtist->findNode(temp_art);
+//	temp_art_title = temp_art.getTitle();
+	cout << "temp art: " << temp_art << endl;
+//	temp_art2.setArtist(temp_art.getArtist());
+//	temp_art2.setTitle(temp_art_title);
+	inventoryArtist->remove(temp_art);
+	inventoryArtist->inOrderPrint(cout);
+
+//	Art a = inventoryArtist->getRoot();
+//	cout << a << endl;
+//	inventoryArtist->remove(a);
+//	cout << endl << endl << endl;
+//	cout << "new art inventory" << endl;
+//	inventoryArtist->inOrderPrint(cout);
 }

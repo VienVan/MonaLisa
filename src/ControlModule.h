@@ -23,8 +23,7 @@ class ControlModule
 private:
     PriorityQueue *orders;
     HashTable *customers;
-    BST<Art> *inventoryTitle;
-    BST<Art> *inventoryArtist;
+
     void orderHandling();
     void searchByArtist(Customer& c, Order& o);
     void searchByTitle(Customer& c, Order& o);
@@ -35,6 +34,8 @@ private:
     Customer checkCustomer();
 
 public:
+    BST<Art> *inventoryTitle;
+    BST<Art> *inventoryArtist;
     ControlModule(BST<Art> *invTitle, BST<Art> *invArtist);
     ~ControlModule();
 	void userInteraction();
@@ -42,6 +43,7 @@ public:
 	void customerInteraction();
 	void viewPurchases(Customer& c);
 	void removeFromInventory(Order& o);
+	void test();
 };
 
 

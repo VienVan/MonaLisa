@@ -21,6 +21,7 @@ Art::Art() : title(""), artist(""), type(""), medium(""), price(0.0), year(0), s
 #include <iomanip>
 #include <iostream>
 #include <string>
+#include <ctype.h>
 #include "Art.h"
 
 Art::Art(string t, string a, string g, string m, double p, unsigned int y) {
@@ -81,6 +82,18 @@ unsigned int Art::getYear() {
 	return year;
 }
 
+bool Art::equalsNoCase(string str1, string str2){
+	if(str1.length() !=str2.length() )
+		return false;
+	for(int i = 0; i < str1.length(); i++){
+		if(tolower(str1[i]) != tolower(str2[i])){
+			return false;
+		}
+	}
+	return true;
+}
+
+
 ostream& operator<<(ostream& os, const Art& art) {
 	os << endl;
 	os << "Title: " << art.title << endl;
@@ -93,52 +106,72 @@ ostream& operator<<(ostream& os, const Art& art) {
 }
 
 bool Art::operator==(const Art& art) {
-	if(sortByTitle)
-		return title == art.title;
-	else
-		return artist == art.artist;
+	if(sortByTitle){
+		return equalsNoCase(title, art.title);
+	}
+	else{
+		return equalsNoCase(artist, art.artist);
+	}
 }
 
 bool Art::operator<(const Art& art) {
-	string first_name(artist, 0, artist.find(" "));
-	string last_name(artist, artist.find(" ") + 1);
-	string first_name2(art.artist, 0, art.artist.find(" "));
-	string last_name2(art.artist, artist.find(" ") + 1);
+//	string first_name(artist, 0, artist.find(" "));
+//	string last_name(artist, artist.find(" ") + 1);
+//	string first_name2(art.artist, 0, art.artist.find(" "));
+//	string last_name2(art.artist, artist.find(" ") + 1);
 	if (sortByTitle)
 	{
-		return title < art.title;
+		if(title == art.title)
+			if(artist== art.artist)
+				return false;
+			else
+				return artist < art.artist;
+		else
+			return title < art.title;
 	}
 	else
 	{
-		if (last_name == last_name2)
+		if (artist == art.artist)
 		{
-			return first_name < first_name2;
+			if(title == art.title)
+			{
+				return false;
+			}
+			else
+				return title < art.title;
 		}
 		else
 		{
-			return last_name < last_name2;
+			return artist < art.artist;
 		}
 	}
 }
 
 bool Art::operator>(const Art& art) {
-	string first_name(artist, 0, artist.find(" ") + 1);
-	string last_name(artist, artist.find(" ") );
-	string first_name2(art.artist, 0, art.artist.find(" "));
-	string last_name2(art.artist, artist.find(" ") + 1);
 	if (sortByTitle)
 	{
-		return title > art.title;
+		if(title == art.title)
+			if(artist== art.artist)
+				return false;
+			else
+				return artist > art.artist;
+		else
+			return title > art.title;
 	}
 	else
 	{
-		if (last_name == last_name2)
+		if (artist == art.artist)
 		{
-			return first_name > first_name2;
+			if(title == art.title)
+			{
+				return false;
+			}
+			else
+				return title > art.title;
 		}
 		else
 		{
-			return last_name > last_name2;
+			return artist > art.artist;
 		}
 	}
 }
