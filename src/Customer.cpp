@@ -161,7 +161,7 @@ Customer& Customer::operator=(const Customer& c){
 		orderHistory.removeLast();
 	}
 
-	List<Order> copy(orderHistory);
+	List<Order> copy(c.orderHistory);
 	if(!copy.isEmpty()){
 		copy.startIterator();
 		while(!copy.offEnd()){

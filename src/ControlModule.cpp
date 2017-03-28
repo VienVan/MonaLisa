@@ -50,8 +50,12 @@ void ControlModule::orderHandling() {
 				copy3.shippedOrder(copy);
 				customers->remove(copy3);
 				customers->insert(copy3);
-			} else
-				cout << "There is nothing to ship" << endl;
+				cout << "Your order has been shipped." << endl;
+			}
+			else
+			{
+				cout << "All orders have been fulfilled." << endl;
+			}
 			break;
 		default:
 			break;
@@ -165,6 +169,21 @@ void ControlModule::purchaseItem(Art& a, Order& o) {
 	o.addToCart(a);
 }
 
+void ControlModule::removeFromInventory(Order& o)
+{
+	List<Art> temp_list = o.getCart();
+	while(!temp_list.isEmpty())
+	{
+		Art a = temp_list.getFirst();
+		Art b = temp_list.getFirst();
+		inventoryArtist->remove(a);
+		b.sortByTitle = true;
+		inventoryTitle->remove(b);
+		temp_list.removeFirst();
+		temp_list.printList(cout);
+		cout << "while 1" << endl;
+	}
+}
 void ControlModule::checkOut(Order& o, Customer& c){
 	o.setTotalPrice();
 	string shipping_choice, review_choice;
@@ -201,6 +220,8 @@ void ControlModule::checkOut(Order& o, Customer& c){
 		cout << o << endl;
 		cout << "Is Everything Correct? (Enter y or n): ";
 		getline(cin, review_choice);
+		removeFromInventory(o);
+
 	} while(toupper(review_choice.c_str()[0]) != 'Y');
 
 	orders->addToList(o);
@@ -342,19 +363,18 @@ Customer ControlModule::checkCustomer() {
 		cout << "Please Enter The City You Live In: ";
 		getline(cin, city);
 		temp_customer.setAddress(address);
-		cout << "setAddress" << endl;
 		temp_customer.setCity(city);
-		cout << "setCity" << endl;
 		customers->insert(temp_customer);
-		cout << "insert customer" << endl;
+
 	}
-	cout << "outside everything" << endl;
+
 	return temp_customer;
 }
 
 
 
 void ControlModule::userInteraction() {
+
 	string choice;
 	do {
 		cout << "\n\t Mona Lisa Art Dealer\n\t\t Main Menu" << endl

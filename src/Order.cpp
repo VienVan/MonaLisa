@@ -11,6 +11,11 @@
 #include <ctime>
 #include "Order.h"
 
+List<Art> Order::getCart()
+{
+	return cart;
+}
+
 void Order::setDate() {
 
 

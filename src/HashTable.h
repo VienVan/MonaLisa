@@ -53,7 +53,7 @@ public:
 
     /**Additional Functions*/
 
-    void printBucket(int index);
+    void printBucket(int index, ostream& os);
     //Prints all the books at index
     //pre: 0<= index < SIZE
     //Should print according to the following formula:
@@ -65,7 +65,7 @@ public:
     //ISBN: <isbn>
     //followed by a blank line
 
-    void printTable();
+    void printTable(ostream& os);
     //Prints the first book at each index
     //along with a count of the total books
     //at each index by calling count_bucket

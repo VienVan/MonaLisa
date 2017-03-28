@@ -94,12 +94,8 @@ ostream& operator<<(ostream& os, const Art& art) {
 
 bool Art::operator==(const Art& art) {
 	if(sortByTitle)
-	{
-		cout << "sorted by ttile" << endl;
 		return title == art.title;
-	}
 	else
-		cout << "not sorted by title" << endl;
 		return artist == art.artist;
 }
 

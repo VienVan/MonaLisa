@@ -8,6 +8,7 @@
 #ifndef LIST_H_
 #define LIST_H_
 
+#include <fstream>
 #include <cstddef> //for NULL
 
 template <class listdata> //list stores generic listdata, not any specific C++ type
@@ -75,7 +76,7 @@ class List
         int getSize();
         //Returns the size of the list
 
-        void printList();
+        void printList(std::ostream& os);
         //Prints to the console the value of each element in the list sequentially
 		//and separated by a blank space
 		//Prints nothing if the list is empty
@@ -246,12 +247,12 @@ template <class listdata>
 int List<listdata>::getSize() { return size;}
 
 template <class listdata>
-void List<listdata>::printList()
+void List<listdata>::printList(std::ostream& os)
 {
     Nodeptr temp = first; //create a temporary iterator
     while (temp != NULL)
     {
-    	cout << temp-> data << " ";
+    	os << temp-> data << " ";
     	temp = temp->next;
     }
     cout << endl; //What does this do?

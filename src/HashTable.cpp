@@ -5,6 +5,7 @@
  *      Author: Vincent_Ha
  */
 
+#include <fstream>
 #include "HashTable.h"
 
 /*********************************************
@@ -113,17 +114,17 @@ void HashTable::remove(Customer c)
  * 			 ADDT'L FUNCTIONS                  *
  ***********************************************/
 
-void HashTable::printBucket(int index)
+void HashTable::printBucket(int index, ostream& os)
 {
-	Table[index].printList();
+	Table[index].printList(os);
 }
 
-void HashTable::printTable()
+void HashTable::printTable(ostream& os)
 {
 	for (int i = 0; i < SIZE; i++)
 	{
 		// print customers
-		printBucket(i);
+		printBucket(i, os);
 	}
 }
 
@@ -131,6 +132,7 @@ void HashTable::userInteraction()
 {
 	string choice;
 	string firstName, lastName;
+	Customer customer_copy;
 	do
 	{
 		cout << "Customer's Info" << endl;
@@ -153,8 +155,6 @@ void HashTable::userInteraction()
 				getline(cin,firstName);
 				cout << "Enter the Last Name of the Customer: ";
 				getline(cin, lastName);
-
-				Customer customer_copy;
 				customer_copy.setFirst_Name(firstName);
 				customer_copy.setLast_Name(lastName);
 				if(search(customer_copy) != -1)
@@ -172,7 +172,7 @@ void HashTable::userInteraction()
 			break;
 			case 2:
 			{
-				printTable();
+				printTable(cout);
 			}
 			break;
 			default:
@@ -183,6 +183,8 @@ void HashTable::userInteraction()
 		}
 	} while(atoi(choice.c_str()) != 3);
 
+	ofstream output("Customer.txt");
+	printTable(output);
 }
 
 Customer HashTable::getItem(Customer& c)
@@ -196,7 +198,7 @@ Customer HashTable::getItem(Customer& c)
 		{
 			if(Table[index].getIterator() == c)
 			{
-				temp_customer = c;
+				temp_customer = Table[index].getIterator();
 			}
 			Table[index].advanceIterator();
 		}

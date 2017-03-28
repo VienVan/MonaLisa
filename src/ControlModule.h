@@ -41,6 +41,7 @@ public:
 	void employeeInteraction();
 	void customerInteraction();
 	void viewPurchases(Customer& c);
+	void removeFromInventory(Order& o);
 };
 
 

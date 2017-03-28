@@ -89,6 +89,9 @@ int main()
 
 	infile.close();
 
+//	infile.open("Customer.txt");
+
+
 	outfile.open("output.txt");
 
 	ControlModule runner(inventoryTitle, inventoryArtist);

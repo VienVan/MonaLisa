@@ -49,6 +49,7 @@ public:
 	void printCart(ostream& os);
 	void setTotalPrice();
 	void userInteraction(string type);
+	List<Art> getCart();
 
 
 	friend ostream& operator<<(ostream& os, const Order& o);
